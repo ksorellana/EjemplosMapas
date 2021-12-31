@@ -1,4 +1,4 @@
-# MapasDeGuatemalaEnR
+# Mapas De Guatemala En R
 K. Samanta Orellana, 28 de diciembre de 2021
 
 Ejemplos para generar mapas de Guatemala en varios formatos, y cómo agregar puntos de ocurrencia de especies. El fin de este documento es facilitar el acceso a los códigos específicos para Guatemala, que generé luego de varios (muchos) intentos. Todos los archivos y capas que utilicé están disponibles en el repositorio. Pueden encontrar información mucho más detallada e instrucciones para personalizar los resultados, en las referencias a continuación.

@@ -266,7 +266,7 @@ ggsave("GuatemalaAltitudPuntos.png")
 ggsave("GuatemalaAltitudPuntos.pdf")
 ```
 
-| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/Mapa_Puntos_Elev_Verde.jpg?raw=true" alt="Mapa AP" width="420" height="470"> | 
+| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/Mapa_Puntos_Elev_Verde.jpg?raw=true" alt="Mapa AP" width="470" height="400"> | 
 |:--:| 
 |Mapa de Guatemala con capa de altitud.|
 
@@ -291,11 +291,11 @@ names(especies)
 
 Unir esta tabla al archivo del mapa (asegurarse que el nombre de las columnas a unir sean iguales (NAME_1 = NAME_1)
   
-  ```
+```
   gua_dep_esp <- gua_dep %>%
 	left_join(especies)
-	```
-  
+
+```  
   	###Si las columnas tienen nombres distintos, se puede hacer esto, por ejemplo:
 	#left_join(especies,
             #by = c("NAME_1" = "departamento"))
@@ -335,7 +335,7 @@ ggsave("GuatemalaDepartamentoEspecies.png")
 ggsave("GuatemalaDepartamentoEspecies.pdf")
 ```
 
-| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/Mapa_Gt.jpg?raw=true" alt="Mapa AP" width="420" height="470"> | 
+| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/Mapa_Gt.jpg?raw=true" alt="Mapa AP" width="440" height="410"> | 
 |:--:| 
 |Mapa de Guatemala con departamentos coloreados por número de especies.|
 

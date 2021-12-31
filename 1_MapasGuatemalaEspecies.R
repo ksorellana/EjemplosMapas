@@ -1,14 +1,14 @@
 #MAPAS DE GUATEMALA CON OCURRENCIA DE ESPECIES
 K. Samanta Orellana, 28 diciembre, 2021
 
-##Construcción de mapas con tidyverse, sf y ggplot2
+##ConstrucciÃ³n de mapas con tidyverse, sf y ggplot2
 ##Algunas referencias: 
 #https://reposhub.com/python/deep-learning/wtesto-SpeciesOccurrenceMapping.html
 #https://r-spatial.org/r/2018/10/25/ggplot2-sf.html
 #https://slcladal.github.io/maps.html
 
 #Capas descargadas de DivaGis: https://www.diva-gis.org/gdata
-#Divisiones administrativas: GTM_adm0.shp (país), GTM_adm1.shp (departamentos), GTM_adm2.shp (municipios)
+#Divisiones administrativas: GTM_adm0.shp (paÃ­s), GTM_adm1.shp (departamentos), GTM_adm2.shp (municipios)
 #Capas descargadas de URL-IARNA: https://sie.url.edu.gt/capas-geograficas/ 
 
 #PAQUETES NECESARIOS--------------------------------------------------------------------------------
@@ -34,8 +34,6 @@ githubinstall("rnaturalearthhires")
 
 #Cargar paquetes
 library(tidyverse)
-library(sf)
-library(ggplot2)
 library(raster) #for processing some spatial data
 library(rnaturalearth) #for downloading shapefiles
 library(sf) #for processing shapefiles
@@ -48,17 +46,20 @@ library(ggpubr) #for easy selection of symbols
 library(rnaturalearthhires)
 
 #Cargar capas que van a construir el mapa de fondo con ggplot
+library(rnaturalearthhires)
+library(raster) #for processing some spatial data
+
 world <- ne_countries(scale = "medium", returnclass = "sf") #Mundo, para construir los mapas
 
 #Cargar las capas del mapa que quieran ser utilizadas
-map <- ne_countries(scale = 10, returnclass = "sf") #Mundo, para definir el área que se va a cortar
+map <- ne_countries(scale = 10, returnclass = "sf") #Mundo, para definir el Ã¡rea que se va a cortar
 states <- ne_states(returnclass = "sf") 
 ocean <- ne_download(scale = 10, type = 'ocean', 
   category = 'physical', returnclass = 'sf')
 rivers <- ne_download(scale = 10, type = 'rivers_lake_centerlines', 
                     category = 'physical', returnclass = 'sf')
                     
-#Para definir el área del mapa, en este caso, Guatemala
+#Para definir el Ã¡rea del mapa, en este caso, Guatemala
 focalArea <- map %>% filter(admin == "Guatemala")
 limit <- st_buffer(focalArea, dist = 1) %>% st_bbox()
 clipLimit <- st_buffer(focalArea, dist = 2) %>% st_bbox()
@@ -67,7 +68,7 @@ crs(limitExtent) <- "+proj=longlat +datum=WGS84 +no_defs"
 
 #Capas de Guatemala
 #Descargar capa de departamentos en DivaGis (https://www.diva-gis.org/gdata) si no quiere usarse la capa de "states" que incluye 
-#todas las divisiones de los otros países
+#todas las divisiones de los otros paÃ­ses
 #DivaGis: https://www.diva-gis.org/gdata
 #URL-IARNA:https://sie.url.edu.gt/capas-geograficas/
 #Guardar todos los archivos en el directorio que estemos usando
@@ -87,7 +88,7 @@ gua_sigap <- st_read("sigap_2019-gtm_corr-iarna.shp")
 #Abrir directorio
 setwd("C://Coding")
 
-#Añadir puntos con archivos .csv, con tres columnas: especie (o alguna otra variable), latitud y longitud
+#AÃ±adir puntos con archivos .csv, con tres columnas: especie (o alguna otra variable), latitud y longitud
 puntos <- read.csv("puntos.csv")
 
 #Revisar los nombres de las columnas
@@ -95,10 +96,10 @@ names(puntos)
 
 #-------------------------------------------------------------------------
 
-#MAPA DE GUATEMALA CON ÁREAS PROTEGIDAS (SIGAP)
+#MAPA DE GUATEMALA CON ÃREAS PROTEGIDAS (SIGAP)
 
 
-#MAPA DE GUATEMALA CON ÁREAS PROTEGIDAS (SIGAP)
+#MAPA DE GUATEMALA CON ÃREAS PROTEGIDAS (SIGAP)
 
 #Para este mapa uso:
 gua_dep <- st_read("GTM_adm1.shp")
@@ -116,7 +117,7 @@ geom_sf(data = ocean, color = "blue", size = 0.05, fill = "#add8e6") +
           linetype = "solid", fill = "white", alpha = 0.5) +
 	geom_sf(data=gua_dep, fill="white") +
 	geom_sf(data=gua_sigap, aes(fill=PERIMETER), linetype="solid", colour="#067010", size=0.3, alpha=0.5) +
-	scale_fill_gradient("Áreas Protegidas", low="green", high= "white", 
+	scale_fill_gradient("Ãreas Protegidas", low="green", high= "white", 
   na.value="transparent")+ 	
    	labs( x = "Longitud", y = "Latitud") +
   coord_sf(xlim = c(-92.5, -88.1), ylim = c(13.8, 18.1), expand = T) +
@@ -126,7 +127,7 @@ geom_sf(data = ocean, color = "blue", size = 0.05, fill = "#add8e6") +
                          style = north_arrow_fancy_orienteering) +
   theme_bw()
 
-#Mapa Áreas Protegidas con puntos incorporados
+#Mapa Ãreas Protegidas con puntos incorporados
 
 ggplot(data = world) +
   geom_sf(fill="white")+
@@ -135,9 +136,9 @@ geom_sf(data = ocean, color = "blue", size = 0.05, fill = "#add8e6") +
           linetype = "solid", fill = "white", alpha = 0.5) +
 	geom_sf(data=gua_dep, fill="white") +
 	geom_sf(data=gua_sigap, aes(fill=PERIMETER), linetype="solid", colour="#067010", size=0.3, alpha=0.5) +
-	scale_fill_gradient("Áreas Protegidas", low="green", high= "white", 
+	scale_fill_gradient("Ãreas Protegidas", low="green", high= "white", 
   na.value="transparent")+ 	
-geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=scientificName, pch=scientificName), cex = 3) + #esta es la línea donde van los puntos, nombrar adecuadamente las columnas de lon y lat
+geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=scientificName, pch=scientificName), cex = 3) + #esta es la lÃ­nea donde van los puntos, nombrar adecuadamente las columnas de lon y lat
 	 scale_color_manual(values=c("blue", "red", "orange"))+
  	labs( x = "Longitud", y = "Latitud") +
   coord_sf(xlim = c(-92.5, -88.1), ylim = c(13.8, 18.1), expand = T) +
@@ -152,7 +153,7 @@ ggsave("AreasProtegidasPuntos.pdf")
 
 #MAPA DE GUATEMALA CON CAPA DE ALTITUD 
 
-#Cargar capas de elevación
+#Cargar capas de elevaciÃ³n
 library(elevatr) #for downloading elevation data
 elev<-get_elev_raster(locations = limitExtent, z = 6, override_size_check = T)
 elevDF<-as.data.frame(elev, xy=TRUE)
@@ -190,7 +191,7 @@ ggplot(data = world) +
 	geom_tile(data = elevDF, aes(x=x, y=y, fill=elevation), alpha =0.5)+
   scale_fill_gradient("Altitud (m)", low="#a3a0a0", high= "#000000", 
                       na.value="transparent")+ 	
-		geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=scientificName, pch=scientificName), cex = 3) + #esta es la línea donde van los puntos, nombrar adecuadamente las columnas de lon y lat
+		geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=scientificName, pch=scientificName), cex = 3) + #esta es la lÃ­nea donde van los puntos, nombrar adecuadamente las columnas de lon y lat
 	 scale_color_manual(values=c("blue", "red", "orange"))+
  	labs( x = "Longitud", y = "Latitud") +
   coord_sf(xlim = c(-92.5, -88.1), ylim = c(13.8, 18.1), expand = T) +
@@ -204,14 +205,14 @@ ggplot(data = world) +
 ggsave("GuatemalaAltitudPuntos.png")
 ggsave("GuatemalaAltitudPuntos.pdf")
 
-#MAPA DE GUATEMALA CON DEPARTAMENTOS Y COLOREADO POR NÚMERO DE ESPECIES
+#MAPA DE GUATEMALA CON DEPARTAMENTOS Y COLOREADO POR NÃšMERO DE ESPECIES
 
 #Cargar la capa que se va a usar para colorear, en este caso departamentos
 
 setwd("C://Coding")
 gua_dep <- st_read("GTM_adm1.shp")
 
-#Cargar el archivo .csv con las columnas de departamentos (NAME_1) y número de especies
+#Cargar el archivo .csv con las columnas de departamentos (NAME_1) y nÃºmero de especies
 #Que la columna de depatamentos se llame igual y que todos los nombres coincidan
 
 especies <- read_csv("puntos2.csv")
@@ -251,7 +252,7 @@ ggplot(data = world) +
 ggsave("GuatemalaDepartamentoEspecies.png")
 ggsave("GuatemalaDepartamentoEspecies.pdf")
 
-#MAPA DE GUATEMALA CON DEPARTAMENTOS, COLOREADO POR NÚMERO DE ESPECIES Y CON PUNTOS
+#MAPA DE GUATEMALA CON DEPARTAMENTOS, COLOREADO POR NÃšMERO DE ESPECIES Y CON PUNTOS
 
 ggplot(data = world) +
   geom_sf(fill="white")+
@@ -261,7 +262,7 @@ ggplot(data = world) +
 	geom_sf(data=gua_dep, fill="white") +
 	geom_sf(data=gua_dep_ant, aes(fill=especies), linetype="solid", size=0.3) +
 	scale_fill_gradient ("Total de especies", high = "grey", low = "white") +
-geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=scientificName, pch=scientificName), cex = 3) + #esta es la línea donde van los puntos, nombrar adecuadamente las columnas de lon y lat
+geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=scientificName, pch=scientificName), cex = 3) + #esta es la lÃ­nea donde van los puntos, nombrar adecuadamente las columnas de lon y lat
 	 scale_color_manual(values=c("black", "red", "blue"))+
 	 	labs( x = "Longitud", y = "Latitud") +
   coord_sf(xlim = c(-92.5, -88.1), ylim = c(13.8, 18.1), expand = T) +

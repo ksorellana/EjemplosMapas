@@ -1,5 +1,5 @@
 # MapasDeGuatemalaEnR
-K.Samanta Orellana, 28 de diciembre de 2021
+K. Samanta Orellana, 28 de diciembre de 2021
 
 Ejemplos para generar mapas de Guatemala en varios formatos, y cómo agregar puntos de ocurrencia de especies.
 
@@ -9,12 +9,12 @@ https://reposhub.com/python/deep-learning/wtesto-SpeciesOccurrenceMapping.html
 https://r-spatial.org/r/2018/10/25/ggplot2-sf.html
 https://slcladal.github.io/maps.html
 
-#Capas descargadas de DivaGis: https://www.diva-gis.org/gdata
-#Divisiones administrativas: GTM_adm0.shp (país), GTM_adm1.shp (departamentos), GTM_adm2.shp (municipios)
-#Capas descargadas de URL-IARNA: https://sie.url.edu.gt/capas-geograficas/ 
+Capas descargadas de DivaGis: https://www.diva-gis.org/gdata
+Divisiones administrativas: GTM_adm0.shp (país), GTM_adm1.shp (departamentos), GTM_adm2.shp (municipios)
+Capas descargadas de URL-IARNA: https://sie.url.edu.gt/capas-geograficas/ 
 
 ### Paquetes necesarios
-#Instalar paquetes
+Instalar paquetes
 
 ```
 install.packages("tidyverse")
@@ -31,7 +31,7 @@ install.packages("ggplot2")
 install.packages("ggpubr")
 ```
 
-### Instalar "rnaturalearthhires" desde github para que no de problemas
+Instalar "rnaturalearthhires" desde github para que no de problemas
 
 ```
 install.packages("githubinstall")
@@ -39,7 +39,7 @@ library(githubinstall)
 githubinstall("rnaturalearthhires")
 ```
 
-### Cargar paquetes
+Cargar paquetes
 
 ```
 library(tidyverse)
@@ -57,13 +57,13 @@ library(ggpubr) #for easy selection of symbols
 library(rnaturalearthhires)
 ```
 
-### Cargar capas que van a construir el mapa de fondo con ggplot
+Cargar capas que van a construir el mapa de fondo con ggplot
 
 ```
 world <- ne_countries(scale = "medium", returnclass = "sf") #Mundo, para construir los mapas
 ```
 
-#Cargar las capas del mapa que quieran ser utilizadas
+Cargar las capas del mapa que quieran ser utilizadas
 
 ```
 map <- ne_countries(scale = 10, returnclass = "sf") #Mundo, para definir el área que se va a cortar
@@ -74,7 +74,7 @@ rivers <- ne_download(scale = 10, type = 'rivers_lake_centerlines',
                     category = 'physical', returnclass = 'sf')
 ```
 
-#Para definir el área del mapa, en este caso, Guatemala
+Para definir el área del mapa, en este caso, Guatemala
 
 ```
 focalArea <- map %>% filter(admin == "Guatemala")
@@ -85,19 +85,20 @@ crs(limitExtent) <- "+proj=longlat +datum=WGS84 +no_defs"
 ```
 
 ### Capas de Guatemala
+
 Descargar capa de departamentos en DivaGis (https://www.diva-gis.org/gdata) si no quiere usarse la capa de "states" que incluye 
 todas las divisiones de los otros países
 DivaGis: https://www.diva-gis.org/gdata
 URL-IARNA:https://sie.url.edu.gt/capas-geograficas/
 Guardar todos los archivos en el directorio que estemos usando
 
-### Abrir directorio donde guardamos y extrajimos las capas
+Abrir directorio donde guardamos y extrajimos las capas
 
 ```
 setwd("C://Coding")
 ```
 
-### Cargar capas de Guatemala
+Cargar capas de Guatemala
 
 ```
 gua_pais <- st_read("GTM_adm0.shp")
@@ -108,20 +109,22 @@ gua_lagos <- st_read("GTM_water_areas_dcw.shp")
 gua_sigap <- st_read("sigap_2019-gtm_corr-iarna.shp")
 ```
 
-### Cargar el (los) archivo(s) con los puntos (especie -u otra variable-, lat, long)
-#Abrir directorio
+### Puntos de ocurrencia
+Cargar el (los) archivo(s) con los puntos (especie -u otra variable-, lat, long)
+
+Abrir directorio
 
 ```
 setwd("C://Coding")
 ```
 
-### Añadir puntos con archivos .csv, con tres columnas: especie (o alguna otra variable), latitud y longitud
+Añadir puntos con archivos .csv, con tres columnas: especie (o alguna otra variable), latitud y longitud
 
 ```
 puntos <- read.csv("puntos.csv")
 ```
 
-### Revisar los nombres de las columnas
+Revisar los nombres de las columnas
 
 ```
 names(puntos)
@@ -129,7 +132,7 @@ names(puntos)
 
 ## Mapa de Guatemala con las Áreas Protegidas delimitadas y puntos de ocurrencia 
 
-#Para este mapa uso:
+Para este mapa uso:
 
 ```
 gua_dep <- st_read("GTM_adm1.shp")
@@ -137,12 +140,12 @@ gua_sigap <- st_read("sigap_2019-gtm_corr-iarna.shp")
 head(gua_sigap)
 ```
 
-#### Para ver preliminarmente alguna de las capas cargadas
+Para ver preliminarmente alguna de las capas cargadas
 ```
 plot(gua_sigap)
 ```
 
-#### Construir mapa
+Construir mapa
 
 ```
 ggplot(data = world) +
@@ -197,7 +200,7 @@ ggsave("AreasProtegidasPuntos.pdf")
 
 ## Mapa de Guatemala con capa de altitud
 
-### Cargar capas de elevación
+Cargar capas de elevación
 
 ```
 library(elevatr) #for downloading elevation data
@@ -207,7 +210,7 @@ colnames(elevDF)<-c("x", "y", "elevation")
 elevDF[, 3][elevDF[, 3] < 1500] <- NA
 ```
 
-### Construir mapa
+Construir mapa
 
 ```
 ggplot(data = world) +
@@ -256,7 +259,7 @@ ggplot(data = world) +
   theme_bw()
 ```
 
-#### Para guardar
+Para guardar
 
 ```  
 ggsave("GuatemalaAltitudPuntos.png")
@@ -264,14 +267,14 @@ ggsave("GuatemalaAltitudPuntos.pdf")
 ```
 ## Mapa de Guatemala con departamentos y coloreado por número de especies
 
-#### Cargar la capa que se va a usar para colorear, en este caso departamentos
+Cargar la capa que se va a usar para colorear, en este caso departamentos
 
 ```
 setwd("C://Coding")
 gua_dep <- st_read("GTM_adm1.shp")
 ```
 
-#### Cargar el archivo .csv con las columnas de departamentos (NAME_1) y número de especies
+Cargar el archivo .csv con las columnas de departamentos (NAME_1) y número de especies
 Que la columna de depatamentos se llame igual y que todos los nombres coincidan
 
 ```
@@ -280,7 +283,7 @@ especies
 names(especies)
 ```
 
-#### Unir esta tabla al archivo del mapa (asegurarse que el nombre de las columnas a unir sean iguales (NAME_1 = NAME_1)
+Unir esta tabla al archivo del mapa (asegurarse que el nombre de las columnas a unir sean iguales (NAME_1 = NAME_1)
   
   ```
   gua_dep_esp <- gua_dep %>%
@@ -292,14 +295,14 @@ names(especies)
             #by = c("NAME_1" = "departamento"))
 	
   
-#### Para revisar la tabla obtenida
+Para revisar la tabla obtenida
 
 ```
 gua_dep_esp
 names(gua_dep_esp)
 ```
 
-#### Para generar el mapa
+Para generar el mapa
 
 ```
 ggplot(data = world) +
@@ -319,7 +322,7 @@ ggplot(data = world) +
   theme_bw()
 ```
 
-#### Para guardar
+Para guardar
 
 ```
 ggsave("GuatemalaDepartamentoEspecies.png")
@@ -348,7 +351,7 @@ geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=sci
   theme_bw()
 ```
 
-### Para guardar
+Para guardar
 
 ```
 ggsave("GuatemalaDepartamentoEspecies.png")

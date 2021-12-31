@@ -3,7 +3,7 @@ K. Samanta Orellana, 28 de diciembre de 2021
 
 Ejemplos para generar mapas de Guatemala en varios formatos, y cómo agregar puntos de ocurrencia de especies.
 
-### Construcción de mapas con tidyverse, sf y ggplot2
+### Construcción de mapas con ggplot2, sf y tidiverse
 Algunas referencias: 
 https://reposhub.com/python/deep-learning/wtesto-SpeciesOccurrenceMapping.html
 https://r-spatial.org/r/2018/10/25/ggplot2-sf.html

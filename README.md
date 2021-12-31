@@ -63,13 +63,21 @@ Cargar capas que van a construir el mapa de fondo con ggplot
 world <- ne_countries(scale = "medium", returnclass = "sf") #Mundo, para construir los mapas
 ```
 
+Para definir el área del mapa
+
+```
+library(rnaturalearthhires)
+library(raster) #for processing some spatial data
+map <- ne_countries(scale = 10, returnclass = "sf")
+```
+
 Cargar las capas del mapa que quieran ser utilizadas
 
 ```
-map <- ne_countries(scale = 10, returnclass = "sf") #Mundo, para definir el área que se va a cortar
-states <- ne_states(returnclass = "sf") 
+map <- ne_countries(scale = 10, returnclass = "sf")
+states <- ne_states(returnclass = "sf")
 ocean <- ne_download(scale = 10, type = 'ocean', 
-  category = 'physical', returnclass = 'sf')
+                   category = 'physical', returnclass = 'sf')
 rivers <- ne_download(scale = 10, type = 'rivers_lake_centerlines', 
                     category = 'physical', returnclass = 'sf')
 ```
@@ -80,7 +88,7 @@ Para definir el área del mapa, en este caso, Guatemala
 focalArea <- map %>% filter(admin == "Guatemala")
 limit <- st_buffer(focalArea, dist = 1) %>% st_bbox()
 clipLimit <- st_buffer(focalArea, dist = 2) %>% st_bbox()
-limitExtent <- s(extent(clipLimit), 'SpatialPolygons')
+limitExtent <- as(extent(clipLimit), 'SpatialPolygons')
 crs(limitExtent) <- "+proj=longlat +datum=WGS84 +no_defs"
 ```
 
@@ -230,7 +238,10 @@ geom_sf(data = ocean, color = "blue", size = 0.05, fill = "#add8e6") +
   theme_bw()
 ```
 
+Para guardar
+
 ```
+ggsave("GuatemalaAltitud.jpg")
 ggsave("GuatemalaAltitud.png")
 ggsave("GuatemalaAltitud.pdf")
 ```
@@ -261,13 +272,14 @@ ggplot(data = world) +
 Para guardar
 
 ```  
+ggsave("GuatemalaAltitudPuntos.jpg")
 ggsave("GuatemalaAltitudPuntos.png")
 ggsave("GuatemalaAltitudPuntos.pdf")
 ```
 
-| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/Mapa_Puntos_Elev_Verde.jpg?raw=true" alt="Mapa AP" width="490" height="400"> | 
+| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/GuatemalaAltitud.jpg?raw=true" alt="Mapa Altitud" width="490" height="400"> <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/GuatemalaAltitudPuntos.jpg?raw=true" alt="Mapa Atitud Puntos" width="490" height="400"> | 
 |:--:| 
-|Mapa de Guatemala con capa de altitud.|
+|Mapa de Guatemala con capa de altitud y con puntos de ocurrencia incorporados.|
 
 
 ## Mapa de Guatemala con departamentos y coloreado por número de especies
@@ -317,7 +329,7 @@ ggplot(data = world) +
           linetype = "solid", fill = "white", alpha = 0.5) +
 	geom_sf(data=gua_dep, fill="white") +
 	geom_sf(data=gua_dep_esp, aes(fill=especies), linetype="solid", size=0.3) +
-	scale_fill_gradient ("Total de especies", high = "green", low = "white") +
+	scale_fill_gradient ("Total de especies", high = "red", low = "white") +
 	 	labs( x = "Longitud", y = "Latitud") +
   coord_sf(xlim = c(-92.5, -88.1), ylim = c(13.8, 18.1), expand = T) +
   annotation_scale(location = "bl", width_hint = 0.3) +
@@ -325,18 +337,15 @@ ggplot(data = world) +
                          pad_x = unit(0.75, "in"), pad_y = unit(0.3, "in"),
                          style = north_arrow_fancy_orienteering) +
   theme_bw()
-```
+  ```
 
 Para guardar
 
 ```
+ggsave("GuatemalaDepartamentoEspecies.jpg")
 ggsave("GuatemalaDepartamentoEspecies.png")
-ggsave("GuatemalaDepartamentoEspecies.pdf")
+ggsave("GuatemalaDepartamentoEspecies.pdf"
 ```
-
-| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/Mapa_Gt.jpg?raw=true" alt="Mapa AP" width="460" height="410"> | 
-|:--:| 
-|Mapa de Guatemala con departamentos coloreados por número de especies.|
 
 ## Mapa de Guatemala con departamentos y coloreado por número de especies y con puntos
 
@@ -347,8 +356,8 @@ ggplot(data = world) +
 	geom_sf(data = focalArea, color = "black", size = 0.15,
           linetype = "solid", fill = "white", alpha = 0.5) +
 	geom_sf(data=gua_dep, fill="white") +
-	geom_sf(data=gua_dep_ant, aes(fill=especies), linetype="solid", size=0.3) +
-	scale_fill_gradient ("Total de especies", high = "green", low = "white") +
+	geom_sf(data=gua_dep_esp, aes(fill=especies), linetype="solid", size=0.3) +
+	scale_fill_gradient ("Total de especies", high = "grey", low = "white") +
 geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=scientificName, pch=scientificName), cex = 3) + #esta es la línea donde van los puntos, nombrar adecuadamente las columnas de lon y lat
 	 scale_color_manual(values=c("black", "red", "blue"))+
 	 	labs( x = "Longitud", y = "Latitud") +
@@ -363,11 +372,14 @@ geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=sci
 Para guardar
 
 ```
+ggsave("GuatemalaDepartamentoEspecies.jpg")
 ggsave("GuatemalaDepartamentoEspecies.png")
 ggsave("GuatemalaDepartamentoEspecies.pdf")
 ```
 
-
+| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/GuatemalaDepartamentoEspecies.jpg?raw=true" alt="Mapa Departamentos" width="490" height="400"> <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/GuatemalaDepartamentoEspeciesPuntos.jpg?raw=true" alt="Mapa Dep Puntos" width="490" height="400"> | 
+|:--:| 
+|Mapa de Guatemala con capa de altitud.|
 
 
 

@@ -9,7 +9,7 @@ Algunas referencias:
 - https://r-spatial.org/r/2018/10/25/ggplot2-sf.html
 - https://slcladal.github.io/maps.html
 
-Capas descargadas de:
+### Capas adicionales descargadas de
 -DivaGis: https://www.diva-gis.org/gdata (divisiones administrativas: GTM_adm0.shp (país), GTM_adm1.shp (departamentos), GTM_adm2.shp (municipios))
 -URL-IARNA: https://sie.url.edu.gt/capas-geograficas/ (SIGAP)
 

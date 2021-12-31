@@ -318,7 +318,7 @@ ggplot(data = world) +
           linetype = "solid", fill = "white", alpha = 0.5) +
 	geom_sf(data=gua_dep, fill="white") +
 	geom_sf(data=gua_dep_esp, aes(fill=especies), linetype="solid", size=0.3) +
-	scale_fill_gradient ("Total de especies", high = "red", low = "white") +
+	scale_fill_gradient ("Total de especies", high = "green", low = "white") +
 	 	labs( x = "Longitud", y = "Latitud") +
   coord_sf(xlim = c(-92.5, -88.1), ylim = c(13.8, 18.1), expand = T) +
   annotation_scale(location = "bl", width_hint = 0.3) +
@@ -349,7 +349,7 @@ ggplot(data = world) +
           linetype = "solid", fill = "white", alpha = 0.5) +
 	geom_sf(data=gua_dep, fill="white") +
 	geom_sf(data=gua_dep_ant, aes(fill=especies), linetype="solid", size=0.3) +
-	scale_fill_gradient ("Total de especies", high = "grey", low = "white") +
+	scale_fill_gradient ("Total de especies", high = "green", low = "white") +
 geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=scientificName, pch=scientificName), cex = 3) + #esta es la línea donde van los puntos, nombrar adecuadamente las columnas de lon y lat
 	 scale_color_manual(values=c("black", "red", "blue"))+
 	 	labs( x = "Longitud", y = "Latitud") +

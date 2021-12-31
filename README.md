@@ -5,13 +5,13 @@ Ejemplos para generar mapas de Guatemala en varios formatos, y cómo agregar pun
 
 ### Construcción de mapas con ggplot2, sf y tidiverse
 Algunas referencias: 
-https://reposhub.com/python/deep-learning/wtesto-SpeciesOccurrenceMapping.html
-https://r-spatial.org/r/2018/10/25/ggplot2-sf.html
-https://slcladal.github.io/maps.html
+- https://reposhub.com/python/deep-learning/wtesto-SpeciesOccurrenceMapping.html
+- https://r-spatial.org/r/2018/10/25/ggplot2-sf.html
+- https://slcladal.github.io/maps.html
 
-Capas descargadas de DivaGis: https://www.diva-gis.org/gdata
-Divisiones administrativas: GTM_adm0.shp (país), GTM_adm1.shp (departamentos), GTM_adm2.shp (municipios)
-Capas descargadas de URL-IARNA: https://sie.url.edu.gt/capas-geograficas/ 
+Capas descargadas de:
+-DivaGis: https://www.diva-gis.org/gdata (divisiones administrativas: GTM_adm0.shp (país), GTM_adm1.shp (departamentos), GTM_adm2.shp (municipios))
+-URL-IARNA: https://sie.url.edu.gt/capas-geograficas/ (SIGAP)
 
 ### Paquetes necesarios
 Instalar paquetes
@@ -86,11 +86,10 @@ crs(limitExtent) <- "+proj=longlat +datum=WGS84 +no_defs"
 
 ### Capas de Guatemala
 
-Descargar capa de departamentos en DivaGis (https://www.diva-gis.org/gdata) si no quiere usarse la capa de "states" que incluye 
-todas las divisiones de los otros países
-DivaGis: https://www.diva-gis.org/gdata
-URL-IARNA:https://sie.url.edu.gt/capas-geograficas/
-Guardar todos los archivos en el directorio que estemos usando
+-Descargar capa de departamentos en DivaGis (https://www.diva-gis.org/gdata) si no quiere usarse la capa de "states" que incluye todas las divisiones de los otros países.
+-DivaGis: https://www.diva-gis.org/gdata
+-URL-IARNA:https://sie.url.edu.gt/capas-geograficas/
+-Guardar todos los archivos en el directorio que estemos usando
 
 Abrir directorio donde guardamos y extrajimos las capas
 

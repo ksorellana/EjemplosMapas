@@ -192,7 +192,7 @@ ggsave("AreasProtegidasPuntos.pdf")
 ```
 
 
-| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/AreasProtegidasGuatemala.jpg?raw=true" alt="Mapa AP" width="420" height="470"> <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/AreasProtegidasPuntos.jpg?raw=true" alt="Mapa AP con puntos" width="420" height="470">| 
+| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/AreasProtegidasGuatemala.jpg?raw=true" alt="Mapa AP" width="440" height="470"> <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/AreasProtegidasPuntos.jpg?raw=true" alt="Mapa AP con puntos" width="440" height="470">| 
 |:--:| 
 |1. Mapa delimitando las Áreas Protegidas de Guatemala. 2. Puntos de ocurrencia agregados. Fuente de shape: IARNA.|
 
@@ -265,7 +265,7 @@ ggsave("GuatemalaAltitudPuntos.png")
 ggsave("GuatemalaAltitudPuntos.pdf")
 ```
 
-| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/Mapa_Puntos_Elev_Verde.jpg?raw=true" alt="Mapa AP" width="470" height="400"> | 
+| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/Mapa_Puntos_Elev_Verde.jpg?raw=true" alt="Mapa AP" width="490" height="400"> | 
 |:--:| 
 |Mapa de Guatemala con capa de altitud.|
 
@@ -334,7 +334,7 @@ ggsave("GuatemalaDepartamentoEspecies.png")
 ggsave("GuatemalaDepartamentoEspecies.pdf")
 ```
 
-| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/Mapa_Gt.jpg?raw=true" alt="Mapa AP" width="440" height="410"> | 
+| <img src="https://github.com/ksorellana/MapasDeGuatemalaEnR/blob/main/mapas/Mapa_Gt.jpg?raw=true" alt="Mapa AP" width="460" height="410"> | 
 |:--:| 
 |Mapa de Guatemala con departamentos coloreados por número de especies.|
 

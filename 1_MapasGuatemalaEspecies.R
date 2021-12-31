@@ -2,16 +2,12 @@
 K. Samanta Orellana, 28 diciembre, 2021
 
 ##Construcción de mapas con tidyverse, sf y ggplot2
-##Algunas referencias: 
-#https://reposhub.com/python/deep-learning/wtesto-SpeciesOccurrenceMapping.html
-#https://r-spatial.org/r/2018/10/25/ggplot2-sf.html
-#https://slcladal.github.io/maps.html
-
 #Capas descargadas de DivaGis: https://www.diva-gis.org/gdata
 #Divisiones administrativas: GTM_adm0.shp (país), GTM_adm1.shp (departamentos), GTM_adm2.shp (municipios)
 #Capas descargadas de URL-IARNA: https://sie.url.edu.gt/capas-geograficas/ 
+#ÁREAS PROTEGIDAS (SIGAP)
 
-#PAQUETES NECESARIOS--------------------------------------------------------------------------------
+#Guardar todos los archivos en el directorio que estemos usando
 
 #Instalar paquetes
 install.packages("tidyverse")
@@ -34,6 +30,8 @@ githubinstall("rnaturalearthhires")
 
 #Cargar paquetes
 library(tidyverse)
+library(sf)
+library(ggplot2)
 library(raster) #for processing some spatial data
 library(rnaturalearth) #for downloading shapefiles
 library(sf) #for processing shapefiles
@@ -46,24 +44,27 @@ library(ggpubr) #for easy selection of symbols
 library(rnaturalearthhires)
 
 #Cargar capas que van a construir el mapa de fondo con ggplot
+#Descargar datos de todo el mundo
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+#Para definir el área del mapa
 library(rnaturalearthhires)
 library(raster) #for processing some spatial data
-
-world <- ne_countries(scale = "medium", returnclass = "sf") #Mundo, para construir los mapas
+map <- ne_countries(scale = 10, returnclass = "sf")
 
 #Cargar las capas del mapa que quieran ser utilizadas
-map <- ne_countries(scale = 10, returnclass = "sf") #Mundo, para definir el área que se va a cortar
-states <- ne_states(returnclass = "sf") 
+map <- ne_countries(scale = 10, returnclass = "sf")
+states <- ne_states(returnclass = "sf")
 ocean <- ne_download(scale = 10, type = 'ocean', 
-  category = 'physical', returnclass = 'sf')
+                   category = 'physical', returnclass = 'sf')
 rivers <- ne_download(scale = 10, type = 'rivers_lake_centerlines', 
                     category = 'physical', returnclass = 'sf')
-                    
+
 #Para definir el área del mapa, en este caso, Guatemala
 focalArea <- map %>% filter(admin == "Guatemala")
 limit <- st_buffer(focalArea, dist = 1) %>% st_bbox()
 clipLimit <- st_buffer(focalArea, dist = 2) %>% st_bbox()
-limitExtent <- s(extent(clipLimit), 'SpatialPolygons')
+limitExtent <- as(extent(clipLimit), 'SpatialPolygons')
 crs(limitExtent) <- "+proj=longlat +datum=WGS84 +no_defs"
 
 #Capas de Guatemala
@@ -178,6 +179,7 @@ geom_sf(data = ocean, color = "blue", size = 0.05, fill = "#add8e6") +
                          style = north_arrow_fancy_orienteering) +
   theme_bw()
 
+ggsave("GuatemalaAltitud.jpg")
 ggsave("GuatemalaAltitud.png")
 ggsave("GuatemalaAltitud.pdf")
 
@@ -202,6 +204,7 @@ ggplot(data = world) +
   theme_bw()
 
   
+ggsave("GuatemalaAltitudPuntos.jpg")
 ggsave("GuatemalaAltitudPuntos.png")
 ggsave("GuatemalaAltitudPuntos.pdf")
 
@@ -249,8 +252,10 @@ ggplot(data = world) +
   theme_bw()
 
 #Para guardar
+ggsave("GuatemalaDepartamentoEspecies.jpg")
 ggsave("GuatemalaDepartamentoEspecies.png")
 ggsave("GuatemalaDepartamentoEspecies.pdf")
+
 
 #MAPA DE GUATEMALA CON DEPARTAMENTOS, COLOREADO POR NÚMERO DE ESPECIES Y CON PUNTOS
 
@@ -260,7 +265,7 @@ ggplot(data = world) +
 	geom_sf(data = focalArea, color = "black", size = 0.15,
           linetype = "solid", fill = "white", alpha = 0.5) +
 	geom_sf(data=gua_dep, fill="white") +
-	geom_sf(data=gua_dep_ant, aes(fill=especies), linetype="solid", size=0.3) +
+	geom_sf(data=gua_dep_esp, aes(fill=especies), linetype="solid", size=0.3) +
 	scale_fill_gradient ("Total de especies", high = "grey", low = "white") +
 geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=scientificName, pch=scientificName), cex = 3) + #esta es la línea donde van los puntos, nombrar adecuadamente las columnas de lon y lat
 	 scale_color_manual(values=c("black", "red", "blue"))+
@@ -273,5 +278,6 @@ geom_point(data = puntos, aes(x=decimalLongitude, y = decimalLatitude, color=sci
   theme_bw()
 
 #Para guardar
+ggsave("GuatemalaDepartamentoEspecies.jpg")
 ggsave("GuatemalaDepartamentoEspecies.png")
 ggsave("GuatemalaDepartamentoEspecies.pdf")

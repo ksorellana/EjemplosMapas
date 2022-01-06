@@ -12,7 +12,7 @@ K. Samanta Orellana, 28 diciembre, 2021
 #Instalar paquetes
 install.packages("tidyverse")
 install.packages("sf")
-install.packages("ggplot2)
+install.packages("ggplot2")
 install.packages("raster")
 install.packages("rnaturalearth")
 install.packages("sf")
